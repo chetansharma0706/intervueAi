@@ -132,7 +132,17 @@ export async function isAuthenticated():Promise<boolean>{
    return true;
 }
 
-
+export async function getInterviewsByUserId(userId: string):Promise<Interview[]| null>{
+    const interviews = await db.collection("interviews").where("userId", "==", userId).orderBy("createdAt", "desc").get();
+    if(interviews.empty){
+        return [];
+    }
+    const interviewData = interviews.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    })) as Interview[];
+    return interviewData;
+}
 // export async function resetPassword(email: string) {
 //   try {
 //     console.log("Password reset email sent!");

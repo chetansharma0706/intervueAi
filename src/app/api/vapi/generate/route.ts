@@ -1,6 +1,5 @@
 import {google} from '@ai-sdk/google';
 import { getRandomInterviewCover } from '../../../../../utils/utils';
-import { truncateSync } from 'node:fs';
 import { db } from '../../../../../firebase/admin';
 export async function GET(){
     return Response.json({succcess:true , data:"Hello from VAPI API"},{status:200});
@@ -37,7 +36,7 @@ export async function POST(request:Request){
         }
 
         await db.collection('interviews').add(interview);
-        return Response.json({success:truncateSync},{status:200});
+        return Response.json({success:true} ,{status:200});
 
     }catch(e){
         console.error(e);
